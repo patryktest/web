@@ -31,7 +31,8 @@
             <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
-				<img id="picture" src=""/>
+				<button onclick="takePhoto">Take Photo</button><br>
+				<img style= "display:none;width:60px;height:60px;" id="picture" src=""/>
 				<div id="output"></div>
             </div>
         </div>
@@ -41,15 +42,20 @@
 				document.addEventListener("deviceready", onDeviceReady, true);
 			}
 			
+			function takePhoto(){
+				navigator.camera.getPicture(onSuccess, onFail, { quality:50});
+			}
+			
 			function onDeviceReady(){
 				navigator.notification.alert("hello word");
 				init();
-				navigator.camera.getPicture(onSuccess, onFail, { quality:50});
+				
 			}
 			
 			function onSuccess(imageData){
 				var image = document.getElementById('picture');
-				image.src = 'data:image/jpeg;base64,' + imageData;
+				image.style.display = 'block';
+				image.src = "data:image/jpeg;base64," + imageData;
 			}
 			
 			function onFail(message){
