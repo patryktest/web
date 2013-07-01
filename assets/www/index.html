@@ -47,7 +47,7 @@
 			}
 			
 			function takePhoto(){
-				navigator.camera.getPicture(onSuccess, onFail, { quality:50});
+				navigator.camera.getPicture(onSuccess, onFail, { quality:50, destinationType: Camera.DestinationType.FILE_URI});
 			}
 			
 			function onDeviceReady(){
@@ -59,7 +59,7 @@
 			function onSuccess(imageData){
 				var image = document.getElementById('picture');
 				image.style.display = 'block';
-				image.src = "images:image/jpeg;base64," + imageData;
+				image.src = imageData;
 				alert('image: '+imageData);
 			}
 			
