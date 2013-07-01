@@ -38,14 +38,20 @@
 		
 		<button onclick="takePhoto()">Take Photo</button>
 		<br>
-		<img style= "display:none;width:60px;height:60px;" id="picture" src=""/>
-				
+		<img style= "display:none;width:150px;height:150px;" id="picture" src="" onclick="clone()"/>
+		<img style= "display:none;width:150px;height:150px;" id="picture2" src=""/>		
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript">
+		var cloneImage="";
             function onLoad(){
 				document.addEventListener("deviceready", onDeviceReady, true);
 			}
 			
+			function clone(){
+				var image = document.getElementById('picture2');
+				image.style.display = 'block';
+				image.src = cloneImage;
+			}
 			function takePhoto(){
 				navigator.camera.getPicture(onSuccess, onFail, { quality:50, destinationType: Camera.DestinationType.FILE_URI});
 			}
@@ -60,6 +66,7 @@
 				var image = document.getElementById('picture');
 				image.style.display = 'block';
 				image.src = imageData;
+				cloneImage = imageData;
 				alert('image: '+imageData);
 			}
 			
