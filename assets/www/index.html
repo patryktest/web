@@ -31,6 +31,7 @@
             <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
+				<div id="output"></div>
             </div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
@@ -41,7 +42,40 @@
 			
 			function onDeviceReady(){
 				navigator.notification.alert("hello word");
+				init();
 			}
+			
+			var wsUri = "ws://echo.websocket.org/";
+			var output;
+
+			function init()
+			{
+				output = document.getElementById("output");
+				testWebSocket();
+			}
+
+			function testWebSocket()
+			{
+				websocket = new WebSocket(wsUri);
+				websocket.onopen = function(evt) { onOpen(evt) };
+				/*websocket.onclose = function(evt) { onClose(evt) };
+				websocket.onmessage = function(evt) { onMessage(evt) };
+				websocket.onerror = function(evt) { onError(evt) };*/
+			}
+
+			function onOpen(evt)
+			{
+				writeToScreen("CONNECTED");
+				//doSend("WebSocket rocks");
+			}
+			
+			function writeToScreen(message)
+			 {
+				var pre = document.createElement("p");
+				pre.style.wordWrap = "break-word";
+				pre.innerHTML = message;
+				output.appendChild(pre);
+			 }
         </script>
     </body>
 </html>
