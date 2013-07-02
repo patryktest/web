@@ -9,6 +9,7 @@
 <body>
 
 <span id="status">Connecting...</span>
+<input type="text" id="input"/>
 
  <script type="text/javascript" src="cordova.js"></script>
  <script src="./js/jquery.min.js"></script>
@@ -27,14 +28,15 @@ function onDeviceReady()
 }
 function connect(){
 	content = $('#status');
-	content.append('brrr <br>');
+	input = $('#input');
     // if user is running mozilla then use it's built-in WebSocket
     window.WebSocket = window.WebSocket || window.MozWebSocket;
 
     var connection = new WebSocket('ws://demo-project.patryktesting.c9.io');
 
     connection.onopen = function () {
-        alert('connected');
+        alert('connected'+device.name);
+		connection.send(device.name);
     };
 
     connection.onerror = function (error) {
@@ -60,7 +62,21 @@ function connect(){
 	function addMessage(message){
 		content.append(message+'<br>');
 	}
+	
+	input.keydown(function(e) {
+		if (e.keyCode === 13) {
+			var msg = $(this).val();
+			if (!msg) {
+				return;
+			}
+			// send the message as an ordinary text
+			connection.send(msg);
+			$(this).val('');
+		}
+	});
 }
+
+
 </script>
 </body>
 </html>
