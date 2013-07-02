@@ -36,7 +36,7 @@ function connect(){
     var connection = new WebSocket('ws://demo-project.patryktesting.c9.io');
 
     connection.onopen = function () {
-        alert('connected'+device.name);
+        //alert('connected'+window.device.name);
 		connection.send(device.name);
     };
 
