@@ -7,9 +7,9 @@
 
 </head>
 <body>
-
-<span id="status">Connecting...</span>
 <input type="text" id="input"/>
+<span id="status">Connecting...</span>
+
 
  <script type="text/javascript" src="cordova.js"></script>
  <script src="./js/jquery.min.js"></script>
@@ -64,8 +64,8 @@ function connect(){
 		}
     };
 	
-	function addMessage(message){
-		content.append('<b>'+name+'</b>'+': '+message+'<br>');
+	function addMessage(name, message){
+		content.prepend('<br><b>'+name+'</b>'+': '+message);
 	}
 	
 	input.keydown(function(e) {
