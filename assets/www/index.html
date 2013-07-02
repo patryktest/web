@@ -28,6 +28,7 @@ function onDeviceReady()
 }
 function connect(){
 	content = $('#status');
+	content.text("");
 	input = $('#input');
     // if user is running mozilla then use it's built-in WebSocket
     window.WebSocket = window.WebSocket || window.MozWebSocket;
@@ -53,14 +54,18 @@ function connect(){
             return;
         }
 		
-		if(json.type === 'message'){
-			addMessage(json.data);
+		if(json.type === 'history')
+		{
+			for(var i=0;i<json.data.length;i++)
+				addMessage(json.data[i].name, json.data[i].text);
 		}
-        // handle incoming message
+		if(json.type === 'message'){
+			addMessage(json.data.name, json.data.text);
+		}
     };
 	
 	function addMessage(message){
-		content.append(message+'<br>');
+		content.append('<b>'+name+'</b>'+': '+message+'<br>');
 	}
 	
 	input.keydown(function(e) {
